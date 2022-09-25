@@ -1,15 +1,25 @@
 import SwiftUI
 
 struct AppBody: View {
+    let dateFormatter: DateFormatter
     @ObservedObject var spotifyHelper:SpotifyUIHelper
     @State var swipedDown:Bool = false
+    init(spotifyHelper:SpotifyUIHelper) {
+        self.spotifyHelper = spotifyHelper
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm:ss a"
+    }
     var body: some View {
         VStack(spacing:0){
             Banner{
                 VStack{
-                    Text("Programmed haphazardly by").font(.system(size: 9))
+                    Text("Programmed haphazardly by").font(.system(size: 10))
                     Text("@uniqueaccountname")
+                    Spacer()
+                    Text("Last Updated").font(.system(size: 16))
+                    Text(spotifyHelper.lastUpdated, formatter: dateFormatter).font(.system(size: 18))
                 }
+                .padding()
             }
             if ((UserDefaults.standard.bool(forKey:"SwipedDown") != true) && !swipedDown) {
                 (Text(Image(systemName:"arrow.down")) + Text(" Pull down to refresh ") + Text(Image(systemName:"arrow.down"))).padding(.top)
@@ -32,12 +42,13 @@ struct Banner<Content: View>: View {
         ZStack{
             Rectangle().fill(Color(UIColor(red: 30/255, green: 215/255, blue: 96/255, alpha: 1.0))).frame(height:100)
             HStack{
-                VStack(alignment:.center){
+                VStack(alignment:.center, spacing:0){
                     Image(uiImage: UIImage(named: "Logo")!)
                         .resizable()
                         .frame(width:100, height:50)
                         .aspectRatio(contentMode: .fit)
-                    Text("SpotiStalker")
+                    Text("FriendTracker")
+                    Text("for Spotify").font(.system(size: 9))
                 }
                 .padding(.leading)
                 Spacer()
@@ -94,6 +105,7 @@ struct UserInfo: View {
 }
 @MainActor  class SpotifyUIHelper:ObservableObject {
     @Published var friendData: [Friend]
+    @Published var lastUpdated: Date = Date()
     func refreshStatuses() {
     }
     init() {
@@ -106,7 +118,7 @@ struct UserInfo: View {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let demoData:SpotiStatuses = load("demodata.json")
+        let demoData:SpotiStatuses = load("DemoData.json")
         AppBody(spotifyHelper: SpotifyUIHelper(friendData: demoData.friends))
     }
 }

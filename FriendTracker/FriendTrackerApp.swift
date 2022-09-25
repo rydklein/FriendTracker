@@ -10,7 +10,7 @@ struct FriendTrackerApp: App {
                 if (spotifyHelper.needsLogin) {
                     VStack{
                         Banner{
-                            Text("Please log into your Spotify Account to continue.")
+                            Text("Please sign into your Spotify Account to continue.")
                         }
                         spotifyHelper.loginWVView
                     }

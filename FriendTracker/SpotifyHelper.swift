@@ -3,7 +3,7 @@ import SwiftUI
 
 // TODO: Replace NeedsLogin with SP_DC being null
 @MainActor class SpotifyHelper:SpotifyUIHelper {
-    @Published var needsLogin: Bool = false;
+    @Published var needsLogin: Bool = false
     private var loginWV: LoginWebView = LoginWebView()
     var loginWVView: LoginWebView.WebViewable
     private var accessToken:String?
@@ -86,6 +86,7 @@ import SwiftUI
             }
             let friendData = try! JSONDecoder().decode(SpotiStatuses.self, from: data)
             self.friendData = friendData.friends
+            self.lastUpdated = Date()
         } catch {
             // Test
         }
