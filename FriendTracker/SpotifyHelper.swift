@@ -1,15 +1,14 @@
 import Foundation
 import SwiftUI
-
+import WebKit
 // TODO: Replace NeedsLogin with SP_DC being null
-@MainActor class SpotifyHelper:SpotifyUIHelper {
+class SpotifyHelper:SpotifyUIHelper {
     @Published var needsLogin: Bool = false
-    private var loginWV: LoginWebView = LoginWebView()
-    var loginWVView: LoginWebView.WebViewable
+    var loginWV: LoginWebView = LoginWebView()
     private var accessToken:String?
-    override init() {
-        loginWVView = loginWV.viewObj
+    @MainActor override init() {
         super.init()
+        doneStarting = false
         loginWV.callback = postLogin
         if (UserDefaults.standard.string(forKey:"LoginToken") == nil) {
             self.needsLogin = true
@@ -22,7 +21,21 @@ import SwiftUI
             await updateListeningStatuses()
         }
     }
-    func postLogin(tokenCookie:String) {
+    override func logout() {
+        loginWV.dataStore.httpCookieStore.getAllCookies(finalizeLogout)
+    }
+    @MainActor func finalizeLogout(cookieArray:[HTTPCookie]) {
+        for cookie in cookieArray {
+            if (cookie.name == "sp_dc") {
+                loginWV.dataStore.httpCookieStore.delete(cookie)
+            }
+        }
+      UserDefaults.standard.removeObject(forKey: "LoginToken")
+      self.accessToken = nil
+        _ = loginWV.viewObj.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+      needsLogin = true
+    }
+    @MainActor func postLogin(tokenCookie:String) {
         UserDefaults.standard.set(tokenCookie, forKey:"LoginToken")
         self.needsLogin = false
         refreshStatuses()
@@ -33,7 +46,7 @@ import SwiftUI
         let accessTokenExpirationTimestampMs: Int
         let isAnonymous: Bool
     }
-    func setAccessToken() async {
+    @MainActor func setAccessToken() async {
         let url = URL(string: "https://open.spotify.com/get_access_token?reason=transport&productType=web_player")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -63,7 +76,7 @@ import SwiftUI
             // error handling later
         }
     }
-    func updateListeningStatuses() async {
+    @MainActor func updateListeningStatuses() async {
         if (self.accessToken == nil) {
             await setAccessToken()
         }
@@ -79,7 +92,6 @@ import SwiftUI
             let (data, response) = try await urlSess.data(from: url)
             if let httpResponse = response as? HTTPURLResponse {
                 if (httpResponse.statusCode == 401) {
-                    await setAccessToken()
                     await updateListeningStatuses()
                     return;
                 }
@@ -87,6 +99,7 @@ import SwiftUI
             let friendData = try! JSONDecoder().decode(SpotiStatuses.self, from: data)
             self.friendData = friendData.friends
             self.lastUpdated = Date()
+            self.doneStarting = true
         } catch {
             // Test
         }

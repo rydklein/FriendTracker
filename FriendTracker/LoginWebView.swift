@@ -3,11 +3,12 @@ import SwiftUI
 import WebKit
 class LoginWebView: ObservableObject {
     let viewObj:WebViewable
+    let dataStore = WKWebsiteDataStore.nonPersistent()
     var callback:@MainActor (_ tokenCookie:String) -> Void = { _ in}
     var navDelegate: WebViewNavigationDelegate = WebViewNavigationDelegate()
     
     init() {
-        viewObj = WebViewable(navDelegate: navDelegate)
+        viewObj = WebViewable(navDelegate: navDelegate, dataStore:dataStore)
         navDelegate.navCallback = onWKLoad
     }
     func onWKLoad(_ webView:WKWebView) -> Void {
@@ -21,7 +22,7 @@ class LoginWebView: ObservableObject {
             return;
             // TODO: Make sure people can't click away.
         }
-        WKWebsiteDataStore.default().httpCookieStore.getAllCookies(cookiesHandler)
+        dataStore.httpCookieStore.getAllCookies(cookiesHandler)
     }
     @MainActor func cookiesHandler(cookieArray:[HTTPCookie]) {
         for cookie in cookieArray {
@@ -32,16 +33,19 @@ class LoginWebView: ObservableObject {
         }
     }
     struct WebViewable: UIViewRepresentable {
-        var navDelegate: WebViewNavigationDelegate
-        init(navDelegate:WebViewNavigationDelegate) {
-            self.navDelegate = navDelegate
+        var webView: WKWebView
+        init(navDelegate:WebViewNavigationDelegate, dataStore:WKWebsiteDataStore){
+            let webViewConfig = WKWebViewConfiguration()
+            webViewConfig.websiteDataStore = dataStore
+            self.webView = WKWebView(frame:.zero ,configuration:webViewConfig)
+            webView.customUserAgent = "FriendTracker    "
+            webView.navigationDelegate = navDelegate
         }
         func makeUIView(context: Context) -> WKWebView {
-            return WKWebView()
+            return webView
         }
         func updateUIView(_ webView: WKWebView, context: Context) {
-            webView.navigationDelegate = navDelegate
-            webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+                webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
         }
 }
     class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {

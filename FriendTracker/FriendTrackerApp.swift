@@ -12,7 +12,8 @@ struct FriendTrackerApp: App {
                         Banner{
                             Text("Please sign into your Spotify Account to continue.")
                         }
-                        spotifyHelper.loginWVView
+                        spotifyHelper.loginWV.viewObj
+                        WebViewControlBar(webView:spotifyHelper.loginWV.viewObj.webView)
                     }
                 } else {
                     AppBody(spotifyHelper: spotifyHelper)

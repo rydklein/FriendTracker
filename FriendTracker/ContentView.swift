@@ -1,7 +1,8 @@
 import SwiftUI
-
+import WebKit
 struct AppBody: View {
     let dateFormatter: DateFormatter
+    @State private var isPresentingConfirm: Bool = false
     @ObservedObject var spotifyHelper:SpotifyUIHelper
     @State var swipedDown:Bool = false
     init(spotifyHelper:SpotifyUIHelper) {
@@ -25,9 +26,37 @@ struct AppBody: View {
                 (Text(Image(systemName:"arrow.down")) + Text(" Pull down to refresh ") + Text(Image(systemName:"arrow.down"))).padding(.top)
             }
             let timeSortedFD = spotifyHelper.friendData.sorted(by: { $0.timestamp > $1.timestamp })
-            List(timeSortedFD, id: \.user.uri) { friend in
+            List{
+            ForEach(timeSortedFD, id: \.user.uri) { friend in
                 UserInfo(friend:friend)
             }
+                if (spotifyHelper.doneStarting) {
+                    HStack(alignment:.center){
+                        Spacer()
+                            HStack {
+                                Image(systemName: "x.square.fill")
+                                Text("Sign Out")
+                                    .fontWeight(.semibold)
+                                
+                            }
+                            .frame(maxHeight:10)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.red)
+                            .cornerRadius(40)
+                            .onTapGesture {
+                                isPresentingConfirm = true
+                            }
+                            .confirmationDialog("Are you sure?",
+                                                isPresented: $isPresentingConfirm) {
+                                Button("Sign Out", role: .destructive) {
+                                    spotifyHelper.logout()
+                                }
+                            }
+                        Spacer()
+                    }
+                }
+        }
             .refreshable {
                 UserDefaults.standard.set(true, forKey:"SwipedDown")
                 swipedDown = true
@@ -57,6 +86,30 @@ struct Banner<Content: View>: View {
                 }.frame(height:100)
                 Spacer()
             }
+        }
+    }
+}
+struct WebViewControlBar: View {
+    var webView: WKWebView
+    var body: some View {
+        HStack(spacing:0){
+            Button(action: {
+              self.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+            }){
+              Image(systemName: "arrow.backward")
+                                .font(.title)
+                                .foregroundColor(.blue)
+                                .padding()
+            }
+            Button(action: {
+              self.webView.reload()
+            }){
+              Image(systemName: "arrow.clockwise.circle")
+                    .font(.title)
+                    .foregroundColor(.blue)
+                    .padding()
+            }
+            Spacer()
         }
     }
 }
@@ -106,15 +159,17 @@ struct UserInfo: View {
 @MainActor  class SpotifyUIHelper:ObservableObject {
     @Published var friendData: [Friend]
     @Published var lastUpdated: Date = Date()
-    func refreshStatuses() {
-    }
+    @Published var doneStarting: Bool = true
     init() {
         friendData = []
     }
     init(friendData:[Friend]){
         self.friendData = friendData
     }
-    
+    func refreshStatuses() {
+    }
+    func logout() {
+    }
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
