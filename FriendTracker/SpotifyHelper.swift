@@ -30,10 +30,10 @@ class SpotifyHelper:SpotifyUIHelper {
                 loginWV.dataStore.httpCookieStore.delete(cookie)
             }
         }
-      UserDefaults.standard.removeObject(forKey: "LoginToken")
-      self.accessToken = nil
+        UserDefaults.standard.removeObject(forKey: "LoginToken")
+        self.accessToken = nil
         _ = loginWV.viewObj.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
-      needsLogin = true
+        needsLogin = true
     }
     @MainActor func postLogin(tokenCookie:String) {
         UserDefaults.standard.set(tokenCookie, forKey:"LoginToken")
@@ -69,7 +69,7 @@ class SpotifyHelper:SpotifyUIHelper {
                     self.needsLogin = true
                     return
                 }
-                }
+            }
             let accessToken = try? JSONDecoder().decode(AccessTokenJSON.self, from: data)
             self.accessToken = accessToken!.accessToken
         } catch {
@@ -103,8 +103,8 @@ class SpotifyHelper:SpotifyUIHelper {
         } catch {
             // Test
         }
-        }
     }
+}
 
 struct SpotiStatuses: Codable {
     let friends: [Friend]
@@ -119,7 +119,7 @@ struct Track: Codable {
     let imageURL: String?
     let album, artist: Album
     let context: SContext
-
+    
     enum CodingKeys: String, CodingKey {
         case uri, name
         case imageURL = "imageUrl"
@@ -136,7 +136,7 @@ struct SContext: Codable {
 struct User: Codable {
     let uri, name: String
     let imageURL: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case uri, name
         case imageURL = "imageUrl"

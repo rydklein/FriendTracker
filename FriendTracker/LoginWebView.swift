@@ -45,9 +45,9 @@ class LoginWebView: ObservableObject {
             return webView
         }
         func updateUIView(_ webView: WKWebView, context: Context) {
-                webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+            webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
         }
-}
+    }
     class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
         var navCallback:(_ webView: WKWebView) -> Void = { _ in}
         override init() {

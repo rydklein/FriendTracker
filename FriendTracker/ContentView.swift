@@ -14,9 +14,6 @@ struct AppBody: View {
         VStack(spacing:0){
             Banner{
                 VStack{
-                    Text("Programmed haphazardly by").font(.system(size: 10))
-                    Text("@uniqueaccountname")
-                    Spacer()
                     Text("Last Updated").font(.system(size: 16))
                     Text(spotifyHelper.lastUpdated, formatter: dateFormatter).font(.system(size: 18))
                 }
@@ -27,36 +24,36 @@ struct AppBody: View {
             }
             let timeSortedFD = spotifyHelper.friendData.sorted(by: { $0.timestamp > $1.timestamp })
             List{
-            ForEach(timeSortedFD, id: \.user.uri) { friend in
-                UserInfo(friend:friend)
-            }
+                ForEach(timeSortedFD, id: \.user.uri) { friend in
+                    UserInfo(friend:friend)
+                }
                 if (spotifyHelper.doneStarting) {
                     HStack(alignment:.center){
                         Spacer()
-                            HStack {
-                                Image(systemName: "x.square.fill")
-                                Text("Sign Out")
-                                    .fontWeight(.semibold)
-                                
+                        HStack {
+                            Image(systemName: "x.square.fill")
+                            Text("Sign Out")
+                                .fontWeight(.semibold)
+                            
+                        }
+                        .frame(maxHeight:10)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .cornerRadius(40)
+                        .onTapGesture {
+                            isPresentingConfirm = true
+                        }
+                        .confirmationDialog("Are you sure?",
+                                            isPresented: $isPresentingConfirm) {
+                            Button("Sign Out", role: .destructive) {
+                                spotifyHelper.logout()
                             }
-                            .frame(maxHeight:10)
-                            .padding()
-                            .foregroundColor(.white)
-                            .background(Color.red)
-                            .cornerRadius(40)
-                            .onTapGesture {
-                                isPresentingConfirm = true
-                            }
-                            .confirmationDialog("Are you sure?",
-                                                isPresented: $isPresentingConfirm) {
-                                Button("Sign Out", role: .destructive) {
-                                    spotifyHelper.logout()
-                                }
-                            }
+                        }
                         Spacer()
                     }
                 }
-        }
+            }
             .refreshable {
                 UserDefaults.standard.set(true, forKey:"SwipedDown")
                 swipedDown = true
@@ -66,6 +63,7 @@ struct AppBody: View {
     }
 }
 struct Banner<Content: View>: View {
+    @State var showAlert:Bool = false
     @ViewBuilder var content: Content
     var body: some View {
         ZStack{
@@ -85,6 +83,18 @@ struct Banner<Content: View>: View {
                     content
                 }.frame(height:100)
                 Spacer()
+                VStack{
+                    Image(systemName:"info.circle")
+                        .padding([.top, .trailing], 8.0)
+                    Spacer()
+                }
+                .frame(height:100)
+                .onTapGesture {
+                    showAlert = true
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Info"), message: Text("FriendTracker v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"))\nDesigned by Ryder Klein\nNeed to get in contact? Email me at Ryder679@live.com"), dismissButton: .default(Text("Dismiss")))
+                }
             }
         }
     }
@@ -94,17 +104,17 @@ struct WebViewControlBar: View {
     var body: some View {
         HStack(spacing:0){
             Button(action: {
-              self.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+                self.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
             }){
-              Image(systemName: "arrow.backward")
-                                .font(.title)
-                                .foregroundColor(.blue)
-                                .padding()
+                Image(systemName: "arrow.backward")
+                    .font(.title)
+                    .foregroundColor(.blue)
+                    .padding()
             }
             Button(action: {
-              self.webView.reload()
+                self.webView.reload()
             }){
-              Image(systemName: "arrow.clockwise.circle")
+                Image(systemName: "arrow.clockwise.circle")
                     .font(.title)
                     .foregroundColor(.blue)
                     .padding()
@@ -143,7 +153,7 @@ struct UserInfo: View {
                 HStack{
                     Text(friend.user.name).bold()
                     Spacer()
-
+                    
                     Text(formatter.localizedString(for: Date.init(timeIntervalSince1970: TimeInterval(friend.timestamp / 1000)), relativeTo: Date()))
                 }
                 (Text(Image(systemName:"headphones")) + Text(" ") + Text(friend.track.name))
@@ -152,7 +162,7 @@ struct UserInfo: View {
                     Text(Image(systemName:            ((friend.track.context.uri.split(separator: ":")[1] != "playlist") ? "opticaldisc" : "music.quarternote.3"))) + Text(" ") + Text(friend.track.context.name)
                 }
             }
-                
+            
         }
     }
 }
@@ -180,18 +190,18 @@ struct ContentView_Previews: PreviewProvider {
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
-
+    
     guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
     else {
         fatalError("Couldn't find \(filename) in main bundle.")
     }
-
+    
     do {
         data = try Data(contentsOf: file)
     } catch {
         fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
     }
-
+    
     do {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
