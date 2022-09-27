@@ -13,12 +13,9 @@ class SpotifyHelper:SpotifyUIHelper {
         if (UserDefaults.standard.string(forKey:"LoginToken") == nil) {
             self.needsLogin = true
         } else {
-            refreshStatuses()
-        }
-    }
-    override func refreshStatuses() {
-        Task {
-            await updateListeningStatuses()
+            Task {
+                await updateListeningStatuses()
+            }
         }
     }
     override func logout() {
@@ -38,7 +35,9 @@ class SpotifyHelper:SpotifyUIHelper {
     @MainActor func postLogin(tokenCookie:String) {
         UserDefaults.standard.set(tokenCookie, forKey:"LoginToken")
         self.needsLogin = false
-        refreshStatuses()
+        Task {
+            await updateListeningStatuses()
+        }
     }
     struct AccessTokenJSON: Decodable {
         let clientId: String
@@ -73,10 +72,11 @@ class SpotifyHelper:SpotifyUIHelper {
             let accessToken = try? JSONDecoder().decode(AccessTokenJSON.self, from: data)
             self.accessToken = accessToken!.accessToken
         } catch {
-            // error handling later
+            // TODO: Add error handling
+            print("Error fetching new access code.")
         }
     }
-    @MainActor func updateListeningStatuses() async {
+    @MainActor override func updateListeningStatuses() async {
         if (self.accessToken == nil) {
             await setAccessToken()
         }
@@ -92,6 +92,7 @@ class SpotifyHelper:SpotifyUIHelper {
             let (data, response) = try await urlSess.data(from: url)
             if let httpResponse = response as? HTTPURLResponse {
                 if (httpResponse.statusCode == 401) {
+                    await setAccessToken()
                     await updateListeningStatuses()
                     return;
                 }
@@ -101,11 +102,10 @@ class SpotifyHelper:SpotifyUIHelper {
             self.lastUpdated = Date()
             self.doneStarting = true
         } catch {
-            // Test
+            // TODO: Add error handling
         }
     }
 }
-
 struct SpotiStatuses: Codable {
     let friends: [Friend]
 }

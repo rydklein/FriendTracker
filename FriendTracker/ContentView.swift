@@ -57,7 +57,7 @@ struct AppBody: View {
             .refreshable {
                 UserDefaults.standard.set(true, forKey:"SwipedDown")
                 swipedDown = true
-                spotifyHelper.refreshStatuses()
+                await spotifyHelper.updateListeningStatuses()
             }
         }
     }
@@ -162,7 +162,6 @@ struct UserInfo: View {
                     Text(Image(systemName:            ((friend.track.context.uri.split(separator: ":")[1] != "playlist") ? "opticaldisc" : "music.quarternote.3"))) + Text(" ") + Text(friend.track.context.name)
                 }
             }
-            
         }
     }
 }
@@ -176,7 +175,7 @@ struct UserInfo: View {
     init(friendData:[Friend]){
         self.friendData = friendData
     }
-    func refreshStatuses() {
+    func updateListeningStatuses() async {
     }
     func logout() {
     }
@@ -187,7 +186,6 @@ struct ContentView_Previews: PreviewProvider {
         AppBody(spotifyHelper: SpotifyUIHelper(friendData: demoData.friends))
     }
 }
-
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
     
@@ -195,13 +193,11 @@ func load<T: Decodable>(_ filename: String) -> T {
     else {
         fatalError("Couldn't find \(filename) in main bundle.")
     }
-    
     do {
         data = try Data(contentsOf: file)
     } catch {
         fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
     }
-    
     do {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
