@@ -6,7 +6,6 @@ class LoginWebView: ObservableObject {
     let dataStore = WKWebsiteDataStore.nonPersistent()
     var callback:@MainActor (_ tokenCookie:String) -> Void = { _ in}
     var navDelegate: WebViewNavigationDelegate = WebViewNavigationDelegate()
-    
     init() {
         viewObj = WebViewable(navDelegate: navDelegate, dataStore:dataStore)
         navDelegate.navCallback = onWKLoad
@@ -20,7 +19,6 @@ class LoginWebView: ObservableObject {
         }
         if (webView.url!.absoluteString.contains("login")) {
             return;
-            // TODO: Make sure people can't click away.
         }
         dataStore.httpCookieStore.getAllCookies(cookiesHandler)
     }
@@ -28,7 +26,7 @@ class LoginWebView: ObservableObject {
         for cookie in cookieArray {
             if (cookie.name == "sp_dc") {
                 callback(cookie.value)
-                break
+                return
             }
         }
     }
@@ -38,7 +36,7 @@ class LoginWebView: ObservableObject {
             let webViewConfig = WKWebViewConfiguration()
             webViewConfig.websiteDataStore = dataStore
             self.webView = WKWebView(frame:.zero ,configuration:webViewConfig)
-            webView.customUserAgent = "FriendTracker    "
+            webView.customUserAgent = "FriendTracker"
             webView.navigationDelegate = navDelegate
         }
         func makeUIView(context: Context) -> WKWebView {
@@ -49,7 +47,7 @@ class LoginWebView: ObservableObject {
         }
     }
     class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
-        var navCallback:(_ webView: WKWebView) -> Void = { _ in}
+        var navCallback:(_ webView: WKWebView) -> Void = { _ in }
         override init() {
             super.init()
         }

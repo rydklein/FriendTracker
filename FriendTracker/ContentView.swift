@@ -1,5 +1,6 @@
 import SwiftUI
 import WebKit
+let specialUsers:[String] = ["sciencyscience"]
 struct AppBody: View {
     let dateFormatter: DateFormatter
     @State private var isPresentingConfirm: Bool = false
@@ -151,7 +152,11 @@ struct UserInfo: View {
             }
             VStack(alignment:.leading){
                 HStack{
-                    Text(friend.user.name).bold()
+                    if (specialUsers.contains(friend.user.uri.split(separator: ":", maxSplits: 3)[2].description)) {
+                        Text(Image(systemName:"crown.fill")).foregroundColor(Color(.systemYellow)) + Text(" ") + Text(friend.user.name).bold()
+                    } else {
+                        Text(friend.user.name).bold()
+                    }
                     Spacer()
                     
                     Text(formatter.localizedString(for: Date.init(timeIntervalSince1970: TimeInterval(friend.timestamp / 1000)), relativeTo: Date()))

@@ -4,7 +4,6 @@ import WebKit
 @main
 struct FriendTrackerApp: App {
     @StateObject var spotifyHelper: SpotifyHelper = SpotifyHelper()
-    var accessToken:String?
     var body: some Scene {
         WindowGroup {
             if (spotifyHelper.needsLogin) {
