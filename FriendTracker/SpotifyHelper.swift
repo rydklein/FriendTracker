@@ -70,6 +70,10 @@ class SpotifyHelper:SpotifyUIHelper {
                 }
             }
             let accessToken = try? JSONDecoder().decode(AccessTokenJSON.self, from: data)
+            if (accessToken == nil) {
+                print("Error fetching new access code.")
+                return
+            }
             self.accessToken = accessToken!.accessToken
         } catch {
             // TODO: Add error handling
