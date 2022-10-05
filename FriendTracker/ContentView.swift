@@ -1,6 +1,6 @@
 import SwiftUI
 import WebKit
-let specialUsers:[String] = ["sciencyscience"]
+let specialUsers:[String] = ["sciencyscience", "mcexrs8v2q4wj5szj4hlyuj5j"]
 struct AppBody: View {
     let dateFormatter: DateFormatter
     @State private var isPresentingConfirm: Bool = false
@@ -35,7 +35,6 @@ struct AppBody: View {
                             Image(systemName: "x.square.fill")
                             Text("Sign Out")
                                 .fontWeight(.semibold)
-                            
                         }
                         .frame(maxHeight:10)
                         .padding()
@@ -129,9 +128,9 @@ struct UserInfo: View {
     var body: some View {
         let formatter = RelativeDateTimeFormatter()
         HStack{
-            VStack(alignment: .leading){
+            ZStack{
                 if (friend.user.imageURL == nil) {
-                    Image(systemName:"person.fill").frame(width: 50, height: 50)
+                    Image(systemName:"person.fill")
                 } else {
                     (AsyncImage(url: URL(string: friend.user.imageURL!)) { phase in
                         switch phase {
@@ -146,17 +145,24 @@ struct UserInfo: View {
                             EmptyView()
                         }
                     })
-                    .frame(width: 50, height: 50)
                     .cornerRadius(10)
                 }
+                if (specialUsers.contains(friend.user.uri.split(separator: ":", maxSplits: 3)[2].description)) {
+                    HStack{
+                        Spacer()
+                        VStack{
+                            Text(Image(systemName:"star.fill")).foregroundColor(Color(.systemYellow))
+                                .padding([.top, .trailing], -11.0)
+                                .font(.system(size: 20))
+                            Spacer()
+                        }
+                    }
+                }
             }
+            .frame(width: 50, height: 50)
             VStack(alignment:.leading){
                 HStack{
-                    if (specialUsers.contains(friend.user.uri.split(separator: ":", maxSplits: 3)[2].description)) {
-                        Text(Image(systemName:"crown.fill")).foregroundColor(Color(.systemYellow)) + Text(" ") + Text(friend.user.name).bold()
-                    } else {
-                        Text(friend.user.name).bold()
-                    }
+                    Text(friend.user.name).bold()
                     Spacer()
                     
                     Text(formatter.localizedString(for: Date.init(timeIntervalSince1970: TimeInterval(friend.timestamp / 1000)), relativeTo: Date()))
