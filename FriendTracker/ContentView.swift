@@ -149,31 +149,52 @@ struct UserInfo: View {
                 }
                 if (specialUsers.contains(friend.user.uri.split(separator: ":", maxSplits: 3)[2].description)) {
                     HStack{
-                        Spacer()
                         VStack{
-                            Text(Image(systemName:"star.fill")).foregroundColor(Color(.systemYellow))
-                                .padding([.top, .trailing], -11.0)
-                                .font(.system(size: 20))
                             Spacer()
+                            Text(Image(systemName:"star.fill")).foregroundColor(Color(.systemYellow))
+                                .padding([.bottom, .leading], -8.0)
+                                .font(.system(size: 20))
                         }
+                        Spacer()
                     }
                 }
             }
             .frame(width: 50, height: 50)
+            .onTapGesture {
+                openURL(friend.user.uri)
+            }
             VStack(alignment:.leading){
                 HStack{
                     Text(friend.user.name).bold()
+                        .onTapGesture {
+                            openURL(friend.user.uri)
+                        }
                     Spacer()
                     
                     Text(formatter.localizedString(for: Date.init(timeIntervalSince1970: TimeInterval(friend.timestamp / 1000)), relativeTo: Date()))
                 }
                 (Text(Image(systemName:"headphones")) + Text(" ") + Text(friend.track.name))
+                    .onTapGesture {
+                        openURL(friend.track.album.uri)
+                    }
                 (Text(Image(systemName:"music.mic")) + Text(" ") +  Text(friend.track.artist.name))
+                    .onTapGesture {
+                        openURL(friend.track.artist.uri)
+                    }
                 HStack(){
-                    Text(Image(systemName:            ((friend.track.context.uri.split(separator: ":")[1] != "playlist") ? "opticaldisc" : "music.quarternote.3"))) + Text(" ") + Text(friend.track.context.name)
+                    (Text(Image(systemName:            ((friend.track.context.uri.split(separator: ":")[1] != "playlist") ? "opticaldisc" : "music.quarternote.3"))) + Text(" ") + Text(friend.track.context.name))
+                        .onTapGesture {
+                            openURL(friend.track.context.uri)
+                        }
                 }
             }
         }
+    }
+}
+func openURL(_ url:String) {
+    let friendURL = URL(string:url)!
+    if (UIApplication.shared.canOpenURL(friendURL)) {
+        UIApplication.shared.open(friendURL)
     }
 }
 @MainActor  class SpotifyUIHelper:ObservableObject {
