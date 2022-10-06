@@ -56,3 +56,27 @@ class LoginWebView: ObservableObject {
         }
     }
 }
+struct WebViewControlBar: View {
+    var webView: WKWebView
+    var body: some View {
+        HStack(spacing:0){
+            Button(action: {
+                self.webView.load(URLRequest(url: URL(string:"https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+            }){
+                Image(systemName: "arrow.backward")
+                    .font(.title)
+                    .foregroundColor(.blue)
+                    .padding()
+            }
+            Button(action: {
+                self.webView.reload()
+            }){
+                Image(systemName: "arrow.clockwise.circle")
+                    .font(.title)
+                    .foregroundColor(.blue)
+                    .padding()
+            }
+            Spacer()
+        }
+    }
+}

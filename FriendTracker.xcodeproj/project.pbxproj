@@ -11,6 +11,9 @@
 		0D6C104328DE590400FACAB4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6C104228DE590400FACAB4 /* ContentView.swift */; };
 		0D6C104528DE590500FACAB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6C104428DE590500FACAB4 /* Assets.xcassets */; };
 		0D6C104828DE590500FACAB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6C104728DE590500FACAB4 /* Preview Assets.xcassets */; };
+		0D7BC9EE28EE135300CE0092 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9ED28EE135300CE0092 /* UserInfo.swift */; };
+		0D7BC9F028EE138E00CE0092 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9EF28EE138E00CE0092 /* Banner.swift */; };
+		0D7BC9F228EE13E000CE0092 /* JSONHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */; };
 		0DA9FA4728DF54F9006D16ED /* SpotifyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */; };
 		0DA9FA4B28DF5D74006D16ED /* LoginWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */; };
 		0DA9FA4E28DF68BA006D16ED /* DemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4D28DF68BA006D16ED /* DemoData.json */; };
@@ -22,6 +25,9 @@
 		0D6C104228DE590400FACAB4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0D6C104428DE590500FACAB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D6C104728DE590500FACAB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0D7BC9ED28EE135300CE0092 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		0D7BC9EF28EE138E00CE0092 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelpers.swift; sourceTree = "<group>"; };
 		0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyHelper.swift; sourceTree = "<group>"; };
 		0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebView.swift; sourceTree = "<group>"; };
 		0DA9FA4D28DF68BA006D16ED /* DemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DemoData.json; sourceTree = "<group>"; };
@@ -62,7 +68,8 @@
 				0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */,
 				0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */,
 				0D6C104028DE590400FACAB4 /* FriendTrackerApp.swift */,
-				0D6C104228DE590400FACAB4 /* ContentView.swift */,
+				0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */,
+				0D7BC9EC28EE133900CE0092 /* Views */,
 				0D6C104428DE590500FACAB4 /* Assets.xcassets */,
 				0D6C104628DE590500FACAB4 /* Preview Content */,
 			);
@@ -76,6 +83,16 @@
 				0D6C104728DE590500FACAB4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0D7BC9EC28EE133900CE0092 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D6C104228DE590400FACAB4 /* ContentView.swift */,
+				0D7BC9ED28EE135300CE0092 /* UserInfo.swift */,
+				0D7BC9EF28EE138E00CE0092 /* Banner.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +167,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D6C104328DE590400FACAB4 /* ContentView.swift in Sources */,
+				0D7BC9F228EE13E000CE0092 /* JSONHelpers.swift in Sources */,
 				0DA9FA4728DF54F9006D16ED /* SpotifyHelper.swift in Sources */,
 				0D6C104128DE590400FACAB4 /* FriendTrackerApp.swift in Sources */,
+				0D7BC9EE28EE135300CE0092 /* UserInfo.swift in Sources */,
 				0DA9FA4B28DF5D74006D16ED /* LoginWebView.swift in Sources */,
+				0D7BC9F028EE138E00CE0092 /* Banner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

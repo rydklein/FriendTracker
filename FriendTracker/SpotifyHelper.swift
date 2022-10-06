@@ -110,39 +110,3 @@ class SpotifyHelper:SpotifyUIHelper {
         }
     }
 }
-struct SpotiStatuses: Codable {
-    let friends: [Friend]
-}
-struct Friend: Codable {
-    let timestamp: Int
-    let user: User
-    let track: Track
-}
-struct Track: Codable {
-    let uri, name: String
-    let imageURL: String?
-    let album, artist: Album
-    let context: SContext
-    
-    enum CodingKeys: String, CodingKey {
-        case uri, name
-        case imageURL = "imageUrl"
-        case album, artist, context
-    }
-}
-struct Album: Codable {
-    let uri, name: String
-}
-struct SContext: Codable {
-    let uri, name: String
-    let index: Int
-}
-struct User: Codable {
-    let uri, name: String
-    let imageURL: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case uri, name
-        case imageURL = "imageUrl"
-    }
-}
