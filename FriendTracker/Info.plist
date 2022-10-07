@@ -8,5 +8,7 @@
 	<array>
 		<string>spotify</string>
 	</array>
+	<key>UIApplicationSupportsMultipleScenes</key>
+	<false/>
 </dict>
 </plist>

@@ -19,10 +19,10 @@ func load<T: Decodable>(_ filename: String) -> T {
     }
 }
 struct SpotiStatuses: Codable {
-    let friends: [Friend]
+    var friends: [Friend]
 }
 struct Friend: Codable {
-    let timestamp: Int
+    var timestamp: Int
     let user: User
     let track: Track
 }

@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 import WebKit
 struct AppBody: View {
@@ -56,6 +57,19 @@ struct AppBody: View {
             .refreshable {
                 UserDefaults.standard.set(true, forKey:"SwipedDown")
                 swipedDown = true
+                let refreshCount = UserDefaults.standard.integer(forKey: "RefreshCount")
+                UserDefaults.standard.set(refreshCount + 1, forKey:"RefreshCount")
+                if (refreshCount >= 49) {
+                    UserDefaults.standard.set(0, forKey:"RefreshCount")
+                    Task {
+                        if let scene = UIApplication.shared.connectedScenes
+                            .first(where: { $0.activationState == .foregroundActive })
+                            as? UIWindowScene {
+                            try await Task.sleep(nanoseconds: 6_000_000_000)
+                            SKStoreReviewController.requestReview(in: scene)
+                        }
+                    }
+                }
                 await spotifyHelper.updateListeningStatuses()
             }
         }
@@ -83,8 +97,21 @@ func openURL(_ url:String) {
     }
 }
 struct ContentView_Previews: PreviewProvider {
+    static let appBody = AppBody(spotifyHelper: SpotifyUIHelper(friendData: getDemoData()))
     static var previews: some View {
-        let demoData:SpotiStatuses = load("DemoData.json")
-        AppBody(spotifyHelper: SpotifyUIHelper(friendData: demoData.friends))
+        appBody
+        #if DEBUG
+        // Generates screenshots from preview
+            .screenshot()
+        #endif
+    }
+    static func getDemoData() -> [Friend] {
+        var demoData:SpotiStatuses = load("DemoData.json")
+        var i = 0
+        while (i < demoData.friends.count) {
+            demoData.friends[i].timestamp = (Int(Date().timeIntervalSince1970 * 1000) - Int(truncating: 1000 + (pow(2, i + 5) * 1000) as NSNumber))
+            i += 1
+        }
+        return demoData.friends
     }
 }

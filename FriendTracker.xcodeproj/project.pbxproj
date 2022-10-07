@@ -14,6 +14,7 @@
 		0D7BC9EE28EE135300CE0092 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9ED28EE135300CE0092 /* UserInfo.swift */; };
 		0D7BC9F028EE138E00CE0092 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9EF28EE138E00CE0092 /* Banner.swift */; };
 		0D7BC9F228EE13E000CE0092 /* JSONHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */; };
+		0D7BC9F728EFA7C700CE0092 /* ScreenshotGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BC9F628EFA7C700CE0092 /* ScreenshotGenerator.swift */; };
 		0DA9FA4728DF54F9006D16ED /* SpotifyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */; };
 		0DA9FA4B28DF5D74006D16ED /* LoginWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */; };
 		0DA9FA4E28DF68BA006D16ED /* DemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4D28DF68BA006D16ED /* DemoData.json */; };
@@ -28,6 +29,7 @@
 		0D7BC9ED28EE135300CE0092 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		0D7BC9EF28EE138E00CE0092 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelpers.swift; sourceTree = "<group>"; };
+		0D7BC9F628EFA7C700CE0092 /* ScreenshotGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotGenerator.swift; sourceTree = "<group>"; };
 		0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyHelper.swift; sourceTree = "<group>"; };
 		0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebView.swift; sourceTree = "<group>"; };
 		0DA9FA4D28DF68BA006D16ED /* DemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DemoData.json; sourceTree = "<group>"; };
@@ -65,10 +67,11 @@
 			isa = PBXGroup;
 			children = (
 				0DA9FA4F28DF9E87006D16ED /* Info.plist */,
-				0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */,
-				0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */,
 				0D6C104028DE590400FACAB4 /* FriendTrackerApp.swift */,
 				0D7BC9F128EE13E000CE0092 /* JSONHelpers.swift */,
+				0DA9FA4A28DF5D74006D16ED /* LoginWebView.swift */,
+				0D7BC9F628EFA7C700CE0092 /* ScreenshotGenerator.swift */,
+				0DA9FA4628DF54F9006D16ED /* SpotifyHelper.swift */,
 				0D7BC9EC28EE133900CE0092 /* Views */,
 				0D6C104428DE590500FACAB4 /* Assets.xcassets */,
 				0D6C104628DE590500FACAB4 /* Preview Content */,
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D6C104328DE590400FACAB4 /* ContentView.swift in Sources */,
+				0D7BC9F728EFA7C700CE0092 /* ScreenshotGenerator.swift in Sources */,
 				0D7BC9F228EE13E000CE0092 /* JSONHelpers.swift in Sources */,
 				0DA9FA4728DF54F9006D16ED /* SpotifyHelper.swift in Sources */,
 				0D6C104128DE590400FACAB4 /* FriendTrackerApp.swift in Sources */,
@@ -299,7 +303,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "FriendTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9474QKS27P;
 				ENABLE_PREVIEWS = YES;
@@ -317,7 +321,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.firedogstuff.friendtracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -325,7 +329,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -335,7 +339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "FriendTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9474QKS27P;
 				ENABLE_PREVIEWS = YES;
@@ -353,7 +357,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.firedogstuff.friendtracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -361,7 +365,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
