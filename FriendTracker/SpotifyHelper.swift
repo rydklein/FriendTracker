@@ -101,10 +101,13 @@ class SpotifyHelper:SpotifyUIHelper {
                     return;
                 }
             }
-            let friendData = try! JSONDecoder().decode(SpotiStatuses.self, from: data)
-            self.friendData = friendData.friends
-            self.lastUpdated = Date()
-            self.doneStarting = true
+            if let friendData = try? JSONDecoder().decode(SpotiStatuses.self, from: data) {
+                self.friendData = friendData.friends
+                self.lastUpdated = Date()
+                self.doneStarting = true
+            } else {
+                logout()
+            }
         } catch {
             // TODO: Add error handling
         }

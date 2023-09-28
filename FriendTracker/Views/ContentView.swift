@@ -73,6 +73,11 @@ struct AppBody: View {
                 await spotifyHelper.updateListeningStatuses()
             }
         }
+        .overlay(alignment: .top, content: {
+            Color(UIColor(red: 30/255, green: 215/255, blue: 96/255, alpha: 1.0))
+                .edgesIgnoringSafeArea(.top)
+                .frame(height: 0)
+        })
     }
 }
 func openURL(_ url:String) {

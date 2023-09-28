@@ -5,8 +5,8 @@ struct Banner<Content: View>: View {
     var body: some View {
         ZStack{
             Rectangle().fill(Color(UIColor(red: 30/255, green: 215/255, blue: 96/255, alpha: 1.0))).frame(height:100)
-            HStack{
-                VStack(alignment:.center, spacing:0){
+            HStack {
+                VStack(alignment:.center, spacing:0) {
                     Image(uiImage: UIImage(named: "Logo")!)
                         .resizable()
                         .frame(width:100, height:50)
