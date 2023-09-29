@@ -1,24 +1,20 @@
+//
+//  FriendTrackerApp.swift
+//  FriendTracker
+//
+//  Created by Ryder Klein on 9/28/23.
+//
+
 import Foundation
 import SwiftUI
 import WebKit
 @main
 struct FriendTrackerApp: App {
-    @StateObject var spotifyHelper: SpotifyHelper = SpotifyHelper()
+    @StateObject var loginViewModel = LoginViewModel()
+    @StateObject var spotifyViewModel = SpotifyViewModel()
     var body: some Scene {
         WindowGroup {
-            if (spotifyHelper.needsLogin) {
-                VStack{
-                    Banner{
-                        Text("Please sign into your Spotify Account to continue.")
-                    }
-                    spotifyHelper.loginWV.viewObj
-                    WebViewControlBar(webView:spotifyHelper.loginWV.viewObj.webView)
-                }
-            } else {
-                AppBody(spotifyHelper: spotifyHelper)
-            }
+            ContentView(loginViewModel: loginViewModel, spotifyViewModel: spotifyViewModel)
         }
-    }
-    init() {
     }
 }
