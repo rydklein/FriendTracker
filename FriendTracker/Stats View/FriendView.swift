@@ -68,7 +68,8 @@ struct FriendView: View {
                     
                     Text(Self.formatter.localizedString(for: Date(timeIntervalSince1970: TimeInterval(friend.timestamp / 1000)), relativeTo: currentDate))
                         .onReceive(timer) { _ in
-                            self.currentDate = Date()
+                            // Fix "in 0s" bug
+                            self.currentDate = Date.now.addingTimeInterval(-0.35)
                         }
                 }
                 (Text(Image(systemName: "headphones")) + Text(" ") + Text(friend.track.name))

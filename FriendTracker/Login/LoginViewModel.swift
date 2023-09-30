@@ -11,10 +11,12 @@ import WebKit
 class LoginViewModel: NSObject, ObservableObject {
     var webView: WKWebView?
     @Published var welcomeDone: Bool = false
-    public var onLogin: (@MainActor (_ tokenCookie: String) -> Void)?
+    public var onLogin: (@MainActor (_ loginToken: String) -> Void)?
     private let dataStore = WKWebsiteDataStore.nonPersistent()
 
     func initWebView() {
+        // nonPersistant is stil persistant enough. Clear login cookie so people can actually log out.
+        dataStore.httpCookieStore.getAllCookies(logoutCookiesHandler)
         let webViewConfig = WKWebViewConfiguration()
         webViewConfig.websiteDataStore = dataStore
         webView = WKWebView(frame: .zero, configuration: webViewConfig)
@@ -37,18 +39,23 @@ class LoginViewModel: NSObject, ObservableObject {
         if webView.url!.absoluteString.contains("login") {
             return
         }
-        dataStore.httpCookieStore.getAllCookies(cookiesHandler)
+        dataStore.httpCookieStore.getAllCookies(loginCookiesHandler)
     }
 
-    func cookiesHandler(cookieArray: [HTTPCookie]) {
+    func loginCookiesHandler(cookieArray: [HTTPCookie]) {
         for cookie in cookieArray {
             if cookie.name == "sp_dc" {
-                if let onLogin = onLogin {
-                    Task {
-                        await onLogin(cookie.value)
-                    }
+                Task {
+                    await onLogin?(cookie.value)
                 }
-                return
+            }
+        }
+    }
+
+    func logoutCookiesHandler(cookieArray: [HTTPCookie]) {
+        for cookie in cookieArray {
+            if cookie.name == "sp_dc" {
+                dataStore.httpCookieStore.delete(cookie)
             }
         }
     }

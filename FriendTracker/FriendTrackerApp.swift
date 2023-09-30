@@ -12,9 +12,15 @@ import WebKit
 struct FriendTrackerApp: App {
     @StateObject var loginViewModel = LoginViewModel()
     @StateObject var spotifyViewModel = SpotifyViewModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView(loginViewModel: loginViewModel, spotifyViewModel: spotifyViewModel)
+                .onAppear {
+                    loginViewModel.onLogin = { [weak spotifyViewModel] newLoginToken in
+                        spotifyViewModel?.setLoginToken(newLoginToken: newLoginToken)
+                    }
+                }
         }
     }
 }

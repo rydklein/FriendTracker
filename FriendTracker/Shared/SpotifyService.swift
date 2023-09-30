@@ -8,7 +8,7 @@
 import Foundation
 
 class SpotifyService {
-    static func getAccessToken(spdc: String) async throws -> String {
+    static func getAccessToken(loginToken: String) async throws -> String {
         let url = URL(string: "https://open.spotify.com/get_access_token?reason=transport&productType=web_player")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -16,7 +16,7 @@ class SpotifyService {
             .domain: ".spotify.com",
             .path: "/",
             .name: "sp_dc",
-            .value: spdc,
+            .value: loginToken,
             .secure: true,
             .expires: NSDate(timeIntervalSinceNow: 3600)
         ]
@@ -40,7 +40,7 @@ class SpotifyService {
         }
     }
 
-    func getListeningStatuses(accessToken: String) async throws -> [Friend] {
+    static func getListeningStatuses(accessToken: String) async throws -> [Friend] {
         let urlSessCfg = URLSessionConfiguration.ephemeral
         urlSessCfg.httpAdditionalHeaders = ["Authorization": "Bearer \(accessToken)"]
         let urlSess = URLSession(configuration: urlSessCfg)

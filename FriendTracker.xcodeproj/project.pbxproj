@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0BF5182AC79D1200EA2DC4 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 0D0BF5172AC79D1200EA2DC4 /* KeychainAccess */; };
+		0D0BF51A2AC79D3800EA2DC4 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BF5192AC79D3800EA2DC4 /* KeychainService.swift */; };
+		0D0BF51C2AC7B22100EA2DC4 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BF51B2AC7B22100EA2DC4 /* HeaderView.swift */; };
+		0D0BF51E2AC7B32600EA2DC4 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BF51D2AC7B32600EA2DC4 /* LogoView.swift */; };
 		0D6C104128DE590400FACAB4 /* FriendTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6C104028DE590400FACAB4 /* FriendTrackerApp.swift */; };
 		0D6C104528DE590500FACAB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6C104428DE590500FACAB4 /* Assets.xcassets */; };
 		0D6C104828DE590500FACAB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D6C104728DE590500FACAB4 /* Preview Assets.xcassets */; };
@@ -25,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D0BF5192AC79D3800EA2DC4 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		0D0BF51B2AC7B22100EA2DC4 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		0D0BF51D2AC7B32600EA2DC4 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		0D6C103D28DE590400FACAB4 /* FriendTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D6C104028DE590400FACAB4 /* FriendTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTrackerApp.swift; sourceTree = "<group>"; };
 		0D6C104428DE590500FACAB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0BF5182AC79D1200EA2DC4 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +118,9 @@
 		0DF0CF7C2AC61BA8006F55B1 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0D0BF51D2AC7B32600EA2DC4 /* LogoView.swift */,
 				0DF0CF7D2AC61BBE006F55B1 /* SpotifyService.swift */,
+				0D0BF5192AC79D3800EA2DC4 /* KeychainService.swift */,
 				0DA9EB8E2AC7488A00831FD2 /* PreviewHelpers.swift */,
 			);
 			path = Shared;
@@ -119,9 +129,10 @@
 		0DF0CF7F2AC61BE1006F55B1 /* Stats View */ = {
 			isa = PBXGroup;
 			children = (
-				0DA71D322AC7587600A82CC9 /* FriendView.swift */,
 				0DA71D2E2AC74ED100A82CC9 /* SpotifyViewModel.swift */,
+				0DA71D322AC7587600A82CC9 /* FriendView.swift */,
 				0DA71D342AC75B5B00A82CC9 /* FriendsListView.swift */,
+				0D0BF51B2AC7B22100EA2DC4 /* HeaderView.swift */,
 			);
 			path = "Stats View";
 			sourceTree = "<group>";
@@ -142,6 +153,9 @@
 			dependencies = (
 			);
 			name = FriendTracker;
+			packageProductDependencies = (
+				0D0BF5172AC79D1200EA2DC4 /* KeychainAccess */,
+			);
 			productName = FriendTracker;
 			productReference = 0D6C103D28DE590400FACAB4 /* FriendTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -170,6 +184,9 @@
 				Base,
 			);
 			mainGroup = 0D6C103428DE590400FACAB4;
+			packageReferences = (
+				0D0BF5162AC79D1200EA2DC4 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = 0D6C103E28DE590400FACAB4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -197,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0BF51C2AC7B22100EA2DC4 /* HeaderView.swift in Sources */,
 				0DA71D332AC7587600A82CC9 /* FriendView.swift in Sources */,
 				0DA71D352AC75B5B00A82CC9 /* FriendsListView.swift in Sources */,
 				0DA9EB8F2AC7488A00831FD2 /* PreviewHelpers.swift in Sources */,
@@ -204,7 +222,9 @@
 				0DF0CF7E2AC61BBE006F55B1 /* SpotifyService.swift in Sources */,
 				0DF0CF7B2AC60CB6006F55B1 /* WebViewRepresentable.swift in Sources */,
 				0DA71D2F2AC74ED100A82CC9 /* SpotifyViewModel.swift in Sources */,
+				0D0BF51A2AC79D3800EA2DC4 /* KeychainService.swift in Sources */,
 				0DA71D372AC75ECF00A82CC9 /* WelcomeView.swift in Sources */,
+				0D0BF51E2AC7B32600EA2DC4 /* LogoView.swift in Sources */,
 				0DA71D312AC74FA400A82CC9 /* LoginView.swift in Sources */,
 				0D6C104128DE590400FACAB4 /* FriendTrackerApp.swift in Sources */,
 				0DF0CF832AC61C9F006F55B1 /* ContentView.swift in Sources */,
@@ -427,6 +447,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0D0BF5162AC79D1200EA2DC4 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0D0BF5172AC79D1200EA2DC4 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D0BF5162AC79D1200EA2DC4 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0D6C103528DE590400FACAB4 /* Project object */;
 }
