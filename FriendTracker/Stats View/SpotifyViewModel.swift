@@ -15,7 +15,7 @@ class SpotifyViewModel: ObservableObject {
     @Published var updatedTime: String? = nil
     @Published var listeningStatuses: [Friend] = []
     @Published var showSignOutConfirm = false
-    @Published var showRefreshPrompt = UserDefaults.standard.integer(forKey: "RefreshCount") > 0
+    @Published var showRefreshPrompt = UserDefaults.standard.integer(forKey: "RefreshCount") < 0
     // Token to fetch listening statuses
     var accessToken: String? = nil
     static var dateFormatter: DateFormatter {
@@ -32,10 +32,10 @@ class SpotifyViewModel: ObservableObject {
         } else {
             loginToken = KeychainService.getLoginToken()
         }
-        // Simulator preview, screenshots
+        // Simulator preview
         if demo {
             loginToken = ""
-            var demoData = loadDemoData()
+            var demoData = SpotifyViewModel.loadDemoData()
             var i = 0
             while i < demoData.count {
                 demoData[i].timestamp = (Int(Date().timeIntervalSince1970 * 1000) - Int(truncating: 1000 + (pow(2, i + 5) * 1000) as NSNumber))
@@ -52,10 +52,10 @@ class SpotifyViewModel: ObservableObject {
 
     @MainActor func friendListRefreshed() async {
         showRefreshPrompt = false
-        // Prompt for review after 50 refreshes
+        // Prompt for review after 25 refreshes
         let refreshCount = UserDefaults.standard.integer(forKey: "RefreshCount")
         UserDefaults.standard.set(refreshCount + 1, forKey: "RefreshCount")
-        if refreshCount >= 51 {
+        if refreshCount >= 26 {
             // Keep refresh count >= 1 after the firs
             UserDefaults.standard.set(1, forKey: "RefreshCount")
             Task {
@@ -73,9 +73,16 @@ class SpotifyViewModel: ObservableObject {
 
     func setLoginToken(newLoginToken: String?) {
         KeychainService.setLoginToken(loginToken: newLoginToken)
-        loginToken = newLoginToken
+        withAnimation {
+            loginToken = newLoginToken
+        }
         if newLoginToken == nil {
             accessToken = nil
+            listeningStatuses = []
+        } else {
+            Task {
+                await updateListeningStatuses()
+            }
         }
     }
 
@@ -98,10 +105,13 @@ class SpotifyViewModel: ObservableObject {
             return
         }
         do {
-            listeningStatuses = try await SpotifyService.getListeningStatuses(accessToken: accessToken).sorted { lhs, rhs in
+            let newListeningStatuses = try await SpotifyService.getListeningStatuses(accessToken: accessToken).sorted { lhs, rhs in
                 lhs.timestamp >= rhs.timestamp
             }
-            updatedTime = SpotifyViewModel.dateFormatter.string(from: Date())
+            withAnimation {
+                listeningStatuses = newListeningStatuses
+                updatedTime = SpotifyViewModel.dateFormatter.string(from: Date())
+            }
         } catch SpotifyError.invalidToken {
             // Retry once if access token is invalid
             self.accessToken = nil
@@ -110,6 +120,29 @@ class SpotifyViewModel: ObservableObject {
             }
         } catch {
             print("Error fetching listening statuses: \(error).")
+        }
+    }
+
+    private static func loadDemoData() -> [Friend] {
+        let data: Data
+
+        guard let file = Bundle.main.url(forResource: "DemoData", withExtension: "json")
+        else {
+            print("Error finding DemoData.")
+            return []
+        }
+        do {
+            data = try Data(contentsOf: file)
+        } catch {
+            print("Error loading DemoData.")
+            return []
+        }
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode([Friend].self, from: data)
+        } catch {
+            print("Error parsing DemoData.")
+            return []
         }
     }
 }

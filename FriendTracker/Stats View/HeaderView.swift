@@ -17,25 +17,34 @@ struct HeaderView: View {
             HStack(alignment: .center, spacing: .zero) {
                 LogoView()
                 Spacer()
-                VStack(alignment: .trailing) {
-                    Text("Last updated:")
-                    if let updatedTime = vm.updatedTime {
-                        Text(updatedTime)
+                HStack(alignment: .center, spacing: .zero) {
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text("Last updated:")
+                        Group {
+                            if let updatedTime = vm.updatedTime {
+                                Text(updatedTime)
+                            } else {
+                                ProgressView()
+                            }
+                        }
+                        .transition(.opacity)
                     }
+                    .padding([.leading, .top, .bottom])
+                    .padding(.trailing, 15)
+                    Spacer()
                 }
-                .padding([.leading, .top, .bottom])
-                .padding(.trailing, 15)
             }
         }
         // Weird layout hacks
-        .frame(height: 70)
+        .frame(height: 75)
         .padding(.bottom, 70)
     }
 }
 
 #Preview {
     VStack {
-        HeaderView(vm: SpotifyViewModel())
+        HeaderView(vm: SpotifyViewModel(demo: true))
         Spacer()
     }
 }

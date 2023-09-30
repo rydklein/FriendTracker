@@ -77,6 +77,8 @@ struct FriendsListView: View {
             }
         }
         .ignoresSafeArea(edges: [.bottom])
+        .transition(.move(edge: .trailing))
+        .zIndex(2)
     }
 }
 

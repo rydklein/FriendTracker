@@ -27,13 +27,16 @@ struct LoginView: View {
             } else {
                 VStack {
                     WebViewRepresentable(vm: vm)
+                        .onAppear {
+                            vm.logout()
+                        }
                     LoginControlBarView(vm: vm)
                 }
                 .transition(.move(edge: .trailing))
                 .zIndex(2)
             }
         }
-        .ignoresSafeArea(.container)
+        .ignoresSafeArea()
     }
 }
 

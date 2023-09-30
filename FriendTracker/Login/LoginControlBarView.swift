@@ -24,10 +24,7 @@ struct LoginControlBarView: View {
                     .padding()
             }
             Button(action: {
-                guard let webView = vm.webView else {
-                    return
-                }
-                webView.load(URLRequest(url: URL(string: "https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F")!))
+                vm.goHome()
             }) {
                 Image(systemName: "house")
                     .font(.title)
@@ -47,5 +44,6 @@ struct LoginControlBarView: View {
             }
             Spacer()
         }
+        .padding(.bottom, 12)
     }
 }

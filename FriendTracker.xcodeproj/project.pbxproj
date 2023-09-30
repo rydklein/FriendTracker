@@ -19,7 +19,6 @@
 		0DA71D332AC7587600A82CC9 /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA71D322AC7587600A82CC9 /* FriendView.swift */; };
 		0DA71D352AC75B5B00A82CC9 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA71D342AC75B5B00A82CC9 /* FriendsListView.swift */; };
 		0DA71D372AC75ECF00A82CC9 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA71D362AC75ECF00A82CC9 /* WelcomeView.swift */; };
-		0DA9EB8F2AC7488A00831FD2 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9EB8E2AC7488A00831FD2 /* PreviewHelpers.swift */; };
 		0DA9FA4E28DF68BA006D16ED /* DemoData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DA9FA4D28DF68BA006D16ED /* DemoData.json */; };
 		0DF0CF772AC60646006F55B1 /* LoginControlBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0CF762AC60646006F55B1 /* LoginControlBarView.swift */; };
 		0DF0CF792AC60673006F55B1 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0CF782AC60673006F55B1 /* LoginViewModel.swift */; };
@@ -41,7 +40,6 @@
 		0DA71D322AC7587600A82CC9 /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
 		0DA71D342AC75B5B00A82CC9 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		0DA71D362AC75ECF00A82CC9 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		0DA9EB8E2AC7488A00831FD2 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpers.swift; sourceTree = "<group>"; };
 		0DA9FA4D28DF68BA006D16ED /* DemoData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DemoData.json; sourceTree = "<group>"; };
 		0DA9FA4F28DF9E87006D16ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0DF0CF762AC60646006F55B1 /* LoginControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginControlBarView.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 				0D0BF51D2AC7B32600EA2DC4 /* LogoView.swift */,
 				0DF0CF7D2AC61BBE006F55B1 /* SpotifyService.swift */,
 				0D0BF5192AC79D3800EA2DC4 /* KeychainService.swift */,
-				0DA9EB8E2AC7488A00831FD2 /* PreviewHelpers.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -217,7 +214,6 @@
 				0D0BF51C2AC7B22100EA2DC4 /* HeaderView.swift in Sources */,
 				0DA71D332AC7587600A82CC9 /* FriendView.swift in Sources */,
 				0DA71D352AC75B5B00A82CC9 /* FriendsListView.swift in Sources */,
-				0DA9EB8F2AC7488A00831FD2 /* PreviewHelpers.swift in Sources */,
 				0DF0CF792AC60673006F55B1 /* LoginViewModel.swift in Sources */,
 				0DF0CF7E2AC61BBE006F55B1 /* SpotifyService.swift in Sources */,
 				0DF0CF7B2AC60CB6006F55B1 /* WebViewRepresentable.swift in Sources */,
@@ -359,7 +355,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "FriendTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9474QKS27P;
 				ENABLE_PREVIEWS = YES;
@@ -395,7 +391,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "FriendTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9474QKS27P;
 				ENABLE_PREVIEWS = YES;
