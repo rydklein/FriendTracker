@@ -12,7 +12,7 @@ struct HeaderView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(Color(UIColor.secondarySystemBackground))
+                .foregroundStyle(Color(UIColor.tertiarySystemFill))
                 .ignoresSafeArea(edges: .top)
             HStack(alignment: .center, spacing: .zero) {
                 LogoView()

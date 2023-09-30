@@ -76,6 +76,7 @@ struct FriendsListView: View {
                 await vm.friendListRefreshed()
             }
         }
+        .background(Color(UIColor.systemGroupedBackground))
         .ignoresSafeArea(edges: [.bottom])
         .transition(.move(edge: .trailing))
         .zIndex(2)

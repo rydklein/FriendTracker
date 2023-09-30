@@ -15,7 +15,7 @@ class SpotifyViewModel: ObservableObject {
     @Published var updatedTime: String? = nil
     @Published var listeningStatuses: [Friend] = []
     @Published var showSignOutConfirm = false
-    @Published var showRefreshPrompt = UserDefaults.standard.integer(forKey: "RefreshCount") < 0
+    @Published var showRefreshPrompt = UserDefaults.standard.integer(forKey: "RefreshCount") <= 0
     // Token to fetch listening statuses
     var accessToken: String? = nil
     static var dateFormatter: DateFormatter {
